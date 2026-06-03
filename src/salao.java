@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class salao{
-    public static void main(String[] args) {
+    public static void mainX(String[] args) {
         int n = 4;
         int b = 4;
         int c = 4;
