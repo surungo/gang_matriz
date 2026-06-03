@@ -17,7 +17,6 @@ class salaoMain {
         Mapa m = new Mapa(size,qtaPistoleirosB, gangB, qtaPistoleirosC, gangC);
         m.show();
 
-
         System.out.println("");
         System.out.println("end");
     }
