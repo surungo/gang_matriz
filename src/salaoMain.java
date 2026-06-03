@@ -7,18 +7,16 @@ class salaoMain {
     }
     private static void start() {
         System.out.println("start");
-        Mapa m = new Mapa(4);
-        m.show();
-
+        int size = 4;
         int qtaPistoleirosB = 5;
         String gangB = "b";
-        m.addPistoleiros(qtaPistoleirosB, gangB);
-        m.show();
+       
 
         int qtaPistoleirosC = 7;
         String gangC = "c";
-        m.addPistoleiros(qtaPistoleirosC, gangC);
+        Mapa m = new Mapa(size,qtaPistoleirosB, gangB, qtaPistoleirosC, gangC);
         m.show();
+
 
         System.out.println("");
         System.out.println("end");
@@ -77,7 +75,7 @@ class Mapa {
     private HashMap<Integer, HashMap<Integer, Pistoleiro>> d;
     private int size;
     
-    public Mapa(int n) {
+    public Mapa(int n, int qtaPistoleirosB, String gangB, int qtaPistoleirosC, String gangC) {
         size = n;
         HashMap<Integer, Pistoleiro> dlinha = new HashMap<Integer, Pistoleiro>();
         Pistoleiro pzero = new Pistoleiro(0, ".");
@@ -92,6 +90,10 @@ class Mapa {
             HashMap<Integer, Pistoleiro> cloneDLinha = new HashMap<>(dlinha);
             d.put(i, cloneDLinha);
         }
+
+        addPistoleiros(qtaPistoleirosB, gangB);
+        addPistoleiros(qtaPistoleirosC, gangC);
+
     }
 
     public boolean addPistoleiros(int qtaPistoleiros, String g) {
