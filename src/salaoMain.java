@@ -9,12 +9,25 @@ class salaoMain {
         System.out.println("start");
         Mapa m = new Mapa(4);
         m.show();
-        System.out.println("");
-        System.out.println("add pistoleiro");
+
         Pistoleiro p1 = new Pistoleiro(1, "b");
+        Pistoleiro p2 = new Pistoleiro(2, "b");
+        
         m.addPistoleiro(0, 0, p1);
         m.show();
+        m.addPistoleiro(1, 2, p2);
+        m.show();
+
+        System.out.println("");
+        System.out.println("end");
     }
+
+    private static void clear() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+
 }
 
 class Pistoleiro {
@@ -44,14 +57,19 @@ class Mapa {
         for (int i = 0; i < n; i++) {
             dlinha.put(i, pzero);
         }
+        
         //monta mapa
         d = new HashMap<Integer, HashMap<Integer, Pistoleiro>>();
         for (int i = 0; i < n; i++) {
-            d.put(i, dlinha);
+            HashMap<Integer, Pistoleiro> cloneDLinha = new HashMap<>(dlinha);
+            d.put(i, cloneDLinha);
         }
     }
 
     public boolean addPistoleiro(int x, int y, Pistoleiro p) {
+        System.out.println("");
+        System.out.println("add pistoleiro");
+
         if (d.get(x).get(y).getId() == 0) {
             d.get(x).put(y, p);
             return true;
