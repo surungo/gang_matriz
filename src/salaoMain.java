@@ -10,23 +10,19 @@ class salaoMain {
         Mapa m = new Mapa(4);
         m.show();
 
-        Pistoleiro p1 = new Pistoleiro(1, "b");
-        Pistoleiro p2 = new Pistoleiro(2, "b");
-        
-        m.addPistoleiro(0, 0, p1);
+        int qtaPistoleirosB = 5;
+        String gangB = "b";
+        m.addPistoleiros(qtaPistoleirosB, gangB);
         m.show();
-        m.addPistoleiro(1, 2, p2);
+
+        int qtaPistoleirosC = 7;
+        String gangC = "c";
+        m.addPistoleiros(qtaPistoleirosC, gangC);
         m.show();
 
         System.out.println("");
         System.out.println("end");
     }
-
-    private static void clear() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
 
 }
 
@@ -47,10 +43,42 @@ class Pistoleiro {
     }
 }
 
+class Coordenadas{
+    private int x;
+    private int y;
+    
+    public Coordenadas(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+
+    public void atualizaCoordenadas(int sizeMapa) {
+        if (y < sizeMapa-1) {
+            y++;
+        }else{
+            y=0;
+            if (x < sizeMapa-1) {
+                x++;
+            }else{
+                x=0;
+            }
+        }
+    }
+}
+
 class Mapa {
     private HashMap<Integer, HashMap<Integer, Pistoleiro>> d;
-
+    private int size;
+    
     public Mapa(int n) {
+        size = n;
         HashMap<Integer, Pistoleiro> dlinha = new HashMap<Integer, Pistoleiro>();
         Pistoleiro pzero = new Pistoleiro(0, ".");
         //monta linha
@@ -66,10 +94,25 @@ class Mapa {
         }
     }
 
-    public boolean addPistoleiro(int x, int y, Pistoleiro p) {
-        System.out.println("");
-        System.out.println("add pistoleiro");
+    public boolean addPistoleiros(int qtaPistoleiros, String g) {
+        int qtaPistoleirosAdicionados = 0;
+        Coordenadas coord = new Coordenadas(0, 0);
+                
+        while (qtaPistoleirosAdicionados < qtaPistoleiros) {
+            if (addPistoleiro(coord.getX(), coord.getY(), new Pistoleiro(qtaPistoleirosAdicionados+1, g))) {
+                qtaPistoleirosAdicionados++;
+            }else{
+                coord.atualizaCoordenadas(size);
+                coord.getX();
+                coord.getY();
+            }
+        }
+        //verificar mapa
+        return true;
+    }
 
+
+    public boolean addPistoleiro(int x, int y, Pistoleiro p) {
         if (d.get(x).get(y).getId() == 0) {
             d.get(x).put(y, p);
             return true;
