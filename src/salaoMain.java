@@ -5,17 +5,31 @@ class salaoMain {
     public static void main(String[] args) {
         start();
     }
+
     private static void start() {
         System.out.println("start");
         int size = 4;
-        int qtaPistoleirosB = 5;
-        String gangB = "b";
-       
 
-        int qtaPistoleirosC = 7;
+        int qtaPistoleirosB = 5;
+        String gangB = "b";       
+
+        int qtaPistoleirosC = 6;
         String gangC = "c";
-        Mapa m = new Mapa(size,qtaPistoleirosB, gangB, qtaPistoleirosC, gangC);
-        m.show();
+
+        if (qtaPistoleirosB + qtaPistoleirosC > size*size) {
+            System.out.println("Quantidade de pistoleiros maior que o tamanho do mapa, tente novamente");
+            return;
+        }
+        HashMap<Integer, Mapa> mapas = new HashMap<>();
+        Mapa m = new Mapa();
+        while (!m.finalizado()){
+            m = new Mapa(size,qtaPistoleirosB, gangB, qtaPistoleirosC, gangC);
+            if(m.valido()){
+                mapas.put(mapas.size(), m);
+                m.show();
+            }
+            
+        }
 
         System.out.println("");
         System.out.println("end");
@@ -73,8 +87,14 @@ class Coordenadas{
 class Mapa {
     private HashMap<Integer, HashMap<Integer, Pistoleiro>> d;
     private int size;
-    
+    private boolean finalizado;
+
+    public Mapa() {
+        finalizado=false;
+    }
+        
     public Mapa(int n, int qtaPistoleirosB, String gangB, int qtaPistoleirosC, String gangC) {
+        finalizado=false;
         size = n;
         HashMap<Integer, Pistoleiro> dlinha = new HashMap<Integer, Pistoleiro>();
         Pistoleiro pzero = new Pistoleiro(0, ".");
@@ -92,7 +112,7 @@ class Mapa {
 
         addPistoleiros(qtaPistoleirosB, gangB);
         addPistoleiros(qtaPistoleirosC, gangC);
-
+        finalizado=true;
     }
 
     public boolean addPistoleiros(int qtaPistoleiros, String g) {
@@ -119,6 +139,14 @@ class Mapa {
             return true;
         }
         return false;
+    }
+
+    public boolean finalizado() {
+        return finalizado;
+    }
+
+    public boolean valido() {
+        return true;
     }
 
     public void show() {
